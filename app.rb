@@ -26,7 +26,7 @@ end
 get '/signput' do
   ext_name = File.extname(params['name'])
   name = File.basename(params['name'], ext_name).parameterize
-  object_name = "/#{params['name']}"
+  object_name = "/#{name}#{ext_name}"
 
   mime_type = params['type']
   expires = Time.now.to_i + EXPIRE_TIME
