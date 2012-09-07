@@ -23,14 +23,14 @@ get '/app.js' do
 end
 
 get '/signput' do
-  objectName = "/#{params['name']}"
+  object_name = "/#{params['name']}"
 
-  mimeType = params['type']
+  mime_type = params['type']
   expires = Time.now.to_i + EXPIRE_TIME
 
-  amzHeaders = "x-amz-acl:public-read"
-  stringToSign = "PUT\n\n#{mimeType}\n#{expires}\n#{amzHeaders}\n#{S3_BUCKET}#{objectName}";
-  sig = CGI::escape(Base64.strict_encode64(OpenSSL::HMAC.digest('sha1', S3_SECRET, stringToSign)))
+  amz_headers = "x-amz-acl:public-read"
+  string_to_sign = "PUT\n\n#{mime_type}\n#{expires}\n#{amz_headers}\n#{S3_BUCKET}#{object_name}";
+  sig = CGI::escape(Base64.strict_encode64(OpenSSL::HMAC.digest('sha1', S3_SECRET, string_to_sign)))
 
-  CGI::escape("#{S3_URL}#{S3_BUCKET}#{objectName}?AWSAccessKeyId=#{S3_KEY}&Expires=#{expires}&Signature=#{sig}")
+  CGI::escape("#{S3_URL}#{S3_BUCKET}#{object_name}?AWSAccessKeyId=#{S3_KEY}&Expires=#{expires}&Signature=#{sig}")
 end
