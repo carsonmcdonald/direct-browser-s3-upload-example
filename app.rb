@@ -2,6 +2,7 @@ require 'sinatra'
 require 'base64'
 require 'openssl'
 require 'cgi'
+require 'file'
 
 S3_KEY='S3 key here'
 S3_SECRET='S3 secret here'
@@ -23,6 +24,8 @@ get '/app.js' do
 end
 
 get '/signput' do
+  ext_name = File.extname(params['name'])
+  name = File.basename(params['name'], ext_name).parameterize
   object_name = "/#{params['name']}"
 
   mime_type = params['type']
